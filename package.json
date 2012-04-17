@@ -1,0 +1,22 @@
+{
+    "name": "NoobConfig"
+  , "version": "0.2"
+  , "description": "Parser for .ini for nodejs"
+  , "homepage": ""
+  , "keywords": ["parser", "ini", "nodejs"]
+  , "author": "Philippe Guilbault <philippe.guilbault@gmail.com>"
+  , "contributors": [
+    ]
+  , "repository":{
+        "type": "git"
+      , "url": "https://git@github.com:Bwen/NoobConfig.git"
+    }
+  , "dependencies": {
+    }
+  , "devDependencies": {
+    }
+  , "main": "index"
+  , "engines": { "node": ">= 0.4.0" }
+  , "scripts": {
+    }
+}
