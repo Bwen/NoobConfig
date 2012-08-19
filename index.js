@@ -2,10 +2,10 @@ var fs = require('fs')
   , configFiles = {};
 
 if (!process.env.ENV_TYPE) {
-  console.error('#################################################################');
+  console.error('#### NoobConfig:#############################################################');
   console.error('# The enviroment variable "ENV_TYPE" must be set according      #');
   console.error('# to your /config/*.ini for theses script to work correctly     #');
-  console.error('#################################################################');
+  console.error('#### NoobConfig:#############################################################');
   process.exit(0);
 }
 
@@ -14,19 +14,21 @@ function get (filename) {
     return configFiles[filename].getEnv(process.env.ENV_TYPE);
   }
 
-  try {
-    var file = fs.readFileSync('config/'+filename+'.ini', 'utf-8')
-      , lines = file.split("\n")
-      , matches = []
-      , previousSection = ''
-      , section = ''
-      , isHeaderLine = false;
-  }
-  catch (Error) {
-    return null;
+  var filepath = '/etc/noob/'+ filename +'.ini';
+  if (!fs.existsSync(filepath)) {
+    filepath = 'config/'+filename+'.ini';
+    if (!fs.existsSync(filepath)) {
+      return null;
+    }
   }
 
-  config = new ConfigFile();
+  var file = fs.readFileSync(filepath, 'utf-8'),
+    lines = file.split("\n"),
+    matches = [],
+    section = '',
+    isHeaderLine = false;
+
+  var config = new ConfigFile();
   for (var i=0; i < lines.length; i++) {
     // if empty line or commented out line
     if (lines[i] == '' || lines[i].match(/^;/)) {
@@ -53,8 +55,6 @@ function get (filename) {
     if (!isHeaderLine) {
       config.addLineToSection(section, lines[i]);
     }
-
-    previousSection = section;
   }
 
   configFiles[filename] = config;
@@ -84,7 +84,7 @@ ConfigFile.prototype.addLineToSection = function (name, line) {
     , currentArray = []
 
   if (!match) {
-    console.error('#### Invalid characters for line:', line);
+    console.error('#### NoobConfig: Invalid characters for line:', line);
     return;
   }
 
